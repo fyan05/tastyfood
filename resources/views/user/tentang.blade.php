@@ -48,14 +48,15 @@
         {{-- IMAGES --}}
         <div class="col-lg-6">
             <div class="d-flex gap-3">
-                <img src="{{ asset('images/about-1.jpg') }}"
-                     class="img-fluid rounded-4 shadow-sm about-img">
+            <img src="{{ asset('asset/gambar/brooke-lark-1Rm9GLHV0UA-unsplash.jpg') }}"
+                 class="img-fluid rounded-4 shadow-sm about-img"
+                 style="width: 45%; height: auto; object-fit: cover;">
 
-                <img src="{{ asset('images/about-2.jpg') }}"
-                     class="img-fluid rounded-4 shadow-sm about-img">
+            <img src="{{ asset('asset/gambar/sebastian-coman-photography-eBmyH7oO5wY-unsplash.jpg') }}"
+                 class="img-fluid rounded-4 shadow-sm about-img"
+                 style="width: 45%; height: auto; object-fit: cover;">
             </div>
         </div>
-
     </div>
 
     {{-- ================= VISI ================= --}}

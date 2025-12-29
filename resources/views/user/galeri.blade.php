@@ -89,7 +89,7 @@
         <div class="carousel-inner gallery-carousel">
 
             <div class="carousel-item active">
-                <img src="{{ asset('asset/gambar/Group 70.png') }}" class="d-block w-100">
+                <img src="{{ asset('asset/gambar/brooke-lark-oaz0raysASk-unsplash.jpg') }}" class="d-block w-100" style="object-fit: cover;">
             </div>
 
             <div class="carousel-item">
