@@ -5,6 +5,7 @@ use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\GaleryController;
 use App\Http\Controllers\GambarTentangController;
 use App\Http\Controllers\KontakController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\TentangController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -13,12 +14,9 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-
-//Admin
+Route::middleware('admin')->group(function () {
+    //
 Route::get('admin/dashboard/', [AdminController::class, 'index'])->name('admin.dashboard');
-Route::get('login', [AdminController::class, 'login'])->name('login');
-Route::post('loginpost', [AdminController::class, 'loginpost'])->name('loginpost');
-Route::get('logout', [AdminController::class, 'logout'])->name('logout');
 
 //Tentang
 Route::get('admin/tentang', [TentangController::class, 'index'])->name('admin.tentang');
@@ -28,7 +26,7 @@ Route::delete('admin/tendestroy/{id}',[TentangController::class,'delete'])->name
 
 //Tentang Gambar
 Route::get('admin/tentang/gambar', [GambarTentangController::class, 'gambar'])->name('admin.tentang.gambar');
-Route::post('admin/gambarstore',[GambarTentangController::class,'store'])->name('admin.gamabrstore');
+Route::post('admin/gambarstore/{id}',[GambarTentangController::class,'store'])->name('admin.gamabrstore');
 Route::put('admin/gambarupdate/{id}',[GambarTentangController::class,'update'])->name('admin.gambarupdate');
 Route::delete('admin/gambardestroy/{id}',[GambarTentangController::class,'delete'])->name('admin.gambardestroy');
 
@@ -37,6 +35,7 @@ Route::get('admin/kontak', [KontakController::class, 'kontak'])->name('admin.kon
 Route::post('admin/kontakstore',[KontakController::class,'store'])->name('kontakstore');
 Route::put('admin/kontakupdate/{id}',[KontakController::class,'update'])->name('kontakupdate');
 Route::delete('admin/kontakdestroy/{id}',[KontakController::class,'delete'])->name('kontakdestroy');
+Route::put('admin/markasread/{id}', [KontakController::class, 'markAsRead'])->name('admin.kontak.read');
 
 //Berita
 Route::get('admin/berita', [BeritaController::class, 'berita'])->name('admin.berita');
@@ -49,7 +48,14 @@ Route::get('admin/gambar',[GaleryController::class,'index'])->name('admin.gambar
 Route::post('admin/galerystore',[GaleryController::class,'store'])->name('gallery-store');
 Route::put('admin/galeryupdate/{id}',[GaleryController::class,'update'])->name('gallery-update');
 Route::delete('admin/galerydestroy/{id}',[GaleryController::class,'delete'])->name('gallery-delete');
+Route::get('/logout/admin',[LoginController::class, 'logout'])->name('logout.admin');
+});
 
+//login
+Route::get('/login', [LoginController::class, 'login'])->name('login');
+Route::post('/login/post', [LoginController::class, 'Authlogin'])->name('loginpost');
+Route::get('/register', [LoginController::class, 'register'])->name('register');
+Route::post('/register/store', [LoginController::class, 'registerpost'])->name('registerpost');
 
 // user
 Route::get('/',[UserController::class, 'home'])->name('home');
@@ -58,5 +64,8 @@ Route::get('/tentang',[UserController::class, 'tentang'])->name('tentang');
 Route::get('/berita',[UserController::class, 'berita'])->name('berita');
 Route::get('/detailberita/{id}',[UserController::class, 'detailberita'])->name('detailberita');
 Route::get('/galeri',[UserController::class, 'galeri'])->name('galeri');
-
+Route::middleware('user')->group(function () {
+    Route::get('/logout',[LoginController::class, 'logout'])->name('logout');
+    Route::get('/komentar/store',[UserController::class, 'store'])->name('komentar.store');
+});
 

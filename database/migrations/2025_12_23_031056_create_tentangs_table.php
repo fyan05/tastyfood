@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('gmail');
             $table->string('no_telp');
             $table->string('alamat');
-            $table->foreignId('gambar_tentang_id')->references('id')->on('gambar_tentangs');
             $table->timestamps();
         });
     }

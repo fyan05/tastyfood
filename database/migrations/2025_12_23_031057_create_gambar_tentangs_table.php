@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('gambar_tentangs', function (Blueprint $table) {
             $table->id();
-            $table->string('gambar');
+            $table->string('nama_file');
             $table->enum('tipe',['perushaan','visi','misi']);
+            $table->foreignId('tentang_id')->constrained('tentangs')->onDelete('cascade');
             $table->timestamps();
         });
     }

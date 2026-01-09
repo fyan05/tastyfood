@@ -78,17 +78,29 @@
 <div class="container py-4">
     <div class="card contact-card border-0 p-4">
         <h4 class="fw-bold mb-4">KONTAK KAMI</h4>
-
-        <form>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        @if(session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+        <form action="{{ route('kontakstore') }}" method="POST">
+            @csrf
             <div class="row g-3">
                 <div class="col-md-6">
-                    <input type="text" class="form-control" placeholder="Subject">
-                    <input type="text" class="form-control mt-3" placeholder="Name">
-                    <input type="email" class="form-control mt-3" placeholder="Email">
+                    <input type="text" name="Subject" class="form-control" placeholder="Subject">
+                    <input type="text" name="Name" class="form-control mt-3" placeholder="Name">
+                    <input type="email" name="Email" class="form-control mt-3" placeholder="Email">
                 </div>
 
                 <div class="col-md-6">
-                    <textarea rows="6" class="form-control" placeholder="Message"></textarea>
+                    <textarea rows="6" class="form-control" name="Message" placeholder="Message"></textarea>
                 </div>
 
                 <div class="col-12">

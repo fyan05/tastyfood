@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('nama');
             $table->string('email');
             $table->text('pesan');
+            $table->enum('status',['terbaca','belum terbaca'])->default('belum terbaca');
+            $table->string('subject');
             $table->timestamps();
         });
     }

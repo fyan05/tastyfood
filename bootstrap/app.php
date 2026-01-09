@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Middleware\AuthAdmin;
+use App\Http\Middleware\AuthUser;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -12,6 +15,8 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         //
+        $middleware->appendToGroup('admin',[AuthAdmin::class]);
+        $middleware->appendToGroup('user',[AuthUser::class]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

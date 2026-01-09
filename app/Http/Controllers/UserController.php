@@ -2,63 +2,46 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\berita;
+use App\Models\galery;
+use App\Models\gambar_tentang;
+use App\Models\tentang;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
     public function home(){
-          $beritaUtama = [
-            'judul' => 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT',
-            'deskripsi' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce scelerisque magna aliquet cursus tempus...',
-            'gambar' => 'images/berita-utama.jpg'
-        ];
+        //   $beritaUtama = Berita::latest()->first();
 
-        $berita = [
-            [
-                'judul' => 'LOREM IPSUM',
-                'deskripsi' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                'gambar' => 'images/berita1.jpg'
-            ],
-            [
-                'judul' => 'LOREM IPSUM',
-                'deskripsi' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                'gambar' => 'images/berita2.jpg'
-            ],
-            [
-                'judul' => 'LOREM IPSUM',
-                'deskripsi' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                'gambar' => 'images/berita3.jpg'
-            ],
-            [
-                'judul' => 'LOREM IPSUM',
-                'deskripsi' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                'gambar' => 'images/berita4.jpg'
-            ],
-        ];
+        // $berita =
 
-        $galeri = [
-            'images/galeri1.jpg',
-            'images/galeri2.jpg',
-            'images/galeri3.jpg',
-            'images/galeri4.jpg',
-            'images/galeri5.jpg',
-            'images/galeri6.jpg',
-        ];
-        return view('user.home',compact('beritaUtama','berita','galeri'));
+        // $galeri =
+        $data['beritaUtama'] = berita::latest()->first();
+        $data['berita'] = berita::latest()->skip(1)->take(5)->get();
+        $data['galeri'] = galery::latest()->take(6)->get();
+        return view('user.home',$data);
     }
     public function kontak(){
         return view('user.kontak');
     }
     public function tentang(){
-        return view('user.tentang');
+        $data['tentang'] = tentang::all();
+        $data['gambartentang'] = gambar_tentang::all();
+        return view('user.tentang', $data);
     }
     public function berita(){
+        $data['berita'] = berita::latest()->first();
+        
         return view('user.berita');
     }
     public function detailberita($id){
         return view('user.detailberita', compact('id'));
     }
     public function galeri(){
-        return view('user.galeri');
+        $foto = galery::Where('tipe', 'foto')->latest()->get();
+        $data['caraousel'] = $foto->take(3);
+        $data['lainnya'] = $foto->slice(3)->take(12);
+        return view('user.galeri', $data);
     }
+
 }

@@ -104,6 +104,6 @@ class BeritaController extends Controller
             ->latest()
             ->get();
 
-        return view('detail', compact('berita', 'komentar'));
+        return view('user.detail-berita', compact('berita', 'komentar'));
     }
 }
