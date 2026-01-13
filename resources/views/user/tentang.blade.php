@@ -1,10 +1,11 @@
 @extends('user.layout')
+
 @section('content')
+
 <style>
-     /* heronavbar */
     .hero {
         background: url('{{ asset("asset/gambar/Group 70.png") }}') center/cover no-repeat;
-        height: 500px;
+        height: 420px;
         position: relative;
         color: #fff;
     }
@@ -18,88 +19,131 @@
         position: relative;
         z-index: 1;
     }
+
+    .section {
+        padding: 80px 0;
+    }
+
+    .section-title {
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+
+    .img-rounded {
+        border-radius: 18px;
+        object-fit: cover;
+    }
 </style>
-{{-- hero --}}
+
+{{-- HERO --}}
 <div class="hero d-flex align-items-center">
     <div class="container hero-content">
-        <h1 class="fw-bold">Tentang Kami</h1>
+        <h1 class="fw-bold text-uppercase">Tentang Kami</h1>
     </div>
 </div>
-<div class="container my-5">
 
-    {{-- ================= TASTY FOOD ================= --}}
-    <div class="row align-items-center mb-5">
+@php
+    $gambarPerusahaan = $gambartentang?->where('tipe','perushaan')->take(2) ?? collect();
+    $gambarVisi       = $gambartentang?->where('tipe','visi')->take(2) ?? collect();
+    $gambarMisi       = $gambartentang?->where('tipe','misi')->first();
+@endphp
 
-        {{-- TEXT --}}
-        <div class="col-lg-6 mb-4 mb-lg-0">
-            <h5 class="fw-bold mb-3">TASTY FOOD</h5>
-            <p class="text-muted">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ornare,
-                augue ut rutrum commodo, dui diam convallis orci, eget consectetur sem
-                eget lacus.
-            </p>
-            <p class="text-muted">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ornare,
-                augue ut rutrum commodo, dui diam convallis orci, eget consectetur sem
-                eget lacus.
-            </p>
-        </div>
+@if($tentang)
 
-        {{-- IMAGES --}}
-        <div class="col-lg-6">
-            <div class="d-flex gap-3">
-            <img src="{{ asset('asset/gambar/brooke-lark-1Rm9GLHV0UA-unsplash.jpg') }}"
-                 class="img-fluid rounded-4 shadow-sm about-img"
-                 style="width: 45%; height: auto; object-fit: cover;">
+{{-- ================= TENTANG PERUSAHAAN ================= --}}
+<section class="section bg-light">
+    <div class="container">
+        <div class="row align-items-center">
 
-            <img src="{{ asset('asset/gambar/sebastian-coman-photography-eBmyH7oO5wY-unsplash.jpg') }}"
-                 class="img-fluid rounded-4 shadow-sm about-img"
-                 style="width: 45%; height: auto; object-fit: cover;">
+            {{-- TEXT --}}
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <h4 class="section-title text-uppercase">
+                    {{ $tentang->nama }}
+                </h4>
+                <p class="text-muted">
+                    {{ $tentang->deskripsi }}
+                </p>
             </div>
+
+            {{-- IMAGE (2) --}}
+            <div class="col-lg-6">
+                <div class="d-flex gap-3">
+                    @forelse ($gambarPerusahaan as $img)
+                        <img src="{{ asset('storage/tentang/'.$img->nama_file) }}"
+                             class="img-fluid img-rounded shadow-sm"
+                             style="width:48%; height:280px;">
+                    @empty
+                        <span class="text-muted">Gambar belum tersedia</span>
+                    @endforelse
+                </div>
+            </div>
+
         </div>
     </div>
+</section>
 
-    {{-- ================= VISI ================= --}}
-    <div class="row align-items-center mb-5">
+{{-- ================= VISI (2 GAMBAR) ================= --}}
+<section class="section">
+    <div class="container">
+        <div class="row align-items-center">
 
-        {{-- IMAGE --}}
-        <div class="col-lg-6 mb-4 mb-lg-0">
-            <img src="{{ asset('images/visi.jpg') }}"
-                 class="img-fluid rounded-4 shadow-sm">
+            {{-- IMAGE --}}
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <div class="d-flex gap-3">
+                    @forelse ($gambarVisi as $img)
+                        <img src="{{ asset('storage/tentang/'.$img->nama_file) }}"
+                             class="img-fluid img-rounded shadow-sm"
+                             style="width:48%; height:300px;">
+                    @empty
+                        <span class="text-muted">Gambar visi belum tersedia</span>
+                    @endforelse
+                </div>
+            </div>
+
+            {{-- TEXT --}}
+            <div class="col-lg-6">
+                <h4 class="section-title">VISI</h4>
+                <p class="text-muted">
+                    {{ $tentang->visi }}
+                </p>
+            </div>
+
         </div>
-
-        {{-- TEXT --}}
-        <div class="col-lg-6">
-            <h5 class="fw-bold mb-3">VISI</h5>
-            <p class="text-muted">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce scelerisque
-                magna aliquet cursus tempus. Duis viverra metus ut ipsum elementum
-                vestibulum. Aliquam rutrum aliquet mauris et sapien.
-            </p>
-        </div>
-
     </div>
+</section>
 
-    {{-- ================= MISI ================= --}}
-    <div class="row align-items-center">
+{{-- ================= MISI ================= --}}
+<section class="section bg-light">
+    <div class="container">
+        <div class="row align-items-center">
 
-        {{-- TEXT --}}
-        <div class="col-lg-6 mb-4 mb-lg-0">
-            <h5 class="fw-bold mb-3">MISI</h5>
-            <p class="text-muted">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce scelerisque
-                magna aliquet cursus tempus. Duis viverra metus ut ipsum elementum
-                vestibulum. Aliquam rutrum aliquet mauris et sapien.
-            </p>
+            {{-- TEXT --}}
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <h4 class="section-title">MISI</h4>
+                <p class="text-muted">
+                    {{ $tentang->misi }}
+                </p>
+            </div>
+
+            {{-- IMAGE (1) --}}
+            <div class="col-lg-6">
+                @if($gambarMisi)
+                    <img src="{{ asset('storage/tentang/'.$gambarMisi->nama_file) }}"
+                         class="img-fluid img-rounded shadow-sm w-100"
+                         style="height:320px;">
+                @else
+                    <span class="text-muted">Gambar misi belum tersedia</span>
+                @endif
+            </div>
+
         </div>
-
-        {{-- IMAGE --}}
-        <div class="col-lg-6">
-            <img src="{{ asset('images/misi.jpg') }}"
-                 class="img-fluid rounded-4 shadow-sm">
-        </div>
-
     </div>
+</section>
 
+@else
+<div class="container py-5 text-center text-muted">
+    <h5>Data Tentang Kami belum tersedia</h5>
 </div>
+@endif
+
 @endsection

@@ -9,6 +9,7 @@
 
     <style>
         body {
+            font-family: 'Poppins',sans-serif;
             background: linear-gradient(135deg, #00c853, #009688);
             min-height: 100vh;
         }

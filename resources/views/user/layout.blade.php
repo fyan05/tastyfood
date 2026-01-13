@@ -213,6 +213,11 @@
                 <li class="nav-item"><a class="nav-link" href="/berita">BERITA</a></li>
                 <li class="nav-item"><a class="nav-link" href="/galeri">GALERI</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ route('kontak') }}">KONTAK</a></li>
+                @if (!Auth::check())
+                <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">LOGIN</a></li>
+                @else
+                <li class="nav-item"><a class="nav-link" href="{{ route('logout') }}">LOGOUT</a></li>
+                @endif
             </ul>
         </div>
 

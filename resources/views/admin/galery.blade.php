@@ -19,7 +19,7 @@
 <style>
 .galeri-card {
     transition: .3s;
-    border-radius: 14px;
+    border-radius: 14px; 
     overflow: hidden;
     position: relative;
 }

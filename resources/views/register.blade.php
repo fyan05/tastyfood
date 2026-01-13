@@ -9,6 +9,7 @@
 
     <style>
         body {
+            font-family: 'Poppins',sans-serif;
             background: linear-gradient(135deg, #2196f3, #3f51b5);
             min-height: 100vh;
         }
@@ -30,7 +31,7 @@
             <div class="alert alert-danger">{{ $errors->first() }}</div>
         @endif
 
-        <form method="POST" action="/register">
+        <form method="POST" action="{{ route('registerpost') }}">
             @csrf
 
             <div class="mb-3">

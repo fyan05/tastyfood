@@ -18,53 +18,85 @@
     GLOBAL
     =================================*/
     body{
-        font-family:'Poppins', sans-serif;
+        font-family:'Poppins',sans-serif;
         background:#F2F2F2;
         color:#333;
         margin:0;
         padding:0;
     }
+/* ===============================
+NAVBAR
+=================================*/
+.navbar{
+    background:transparent;   /* transparan */
+    padding:12px 0;          /* lebih tipis */
+    position:fixed;
+    width:100%;
+    z-index:1000;
+    transition:all .3s ease;
+}
 
-    /* ===============================
-    NAVBAR
-    =================================*/
+/* saat scroll jadi putih */
+.navbar.scrolled{
+    background:#ffffff;
+    box-shadow:0 2px 8px rgba(0,0,0,.06);
+}
+
+/* brand */
+.navbar-brand{
+    font-size:15px;
+    letter-spacing:1.5px;
+    font-weight:700;   /* hanya brand yang bold */
+    color:#222 !important;
+}
+
+/* menu */
+.nav-link{
+    font-size:13px;
+    letter-spacing:1px;
+    font-weight:400;   /* tipis */
+    color:#222 !important;
+}
+
+/* spacing menu desktop */
+@media (min-width:992px){
+    .navbar-nav{
+        margin-left:40px;
+        gap:22px;
+    }
+}
+
+/* toggler */
+.navbar-toggler{
+    border:none;
+    font-size:22px;
+    color:#222;
+}
+
+.navbar-toggler:focus{
+    box-shadow:none;
+}
+
+/* mobile */
+@media (max-width:991px){
     .navbar{
-        background:transparent;
-        padding:25px 0;
-        position:fixed;
-        width:100%;
-        z-index:10;
-    }
-    .navbar-brand,
-    .nav-link{
-        color:#333 !important;
-        font-size:14px;
-        letter-spacing:1px;
-        font-weight:500;
-    }
-    /* NAVBAR SCROLL EFFECT */
-    .navbar {
-        transition: background-color .3s ease, box-shadow .3s ease;
+        background:#fff;   /* mobile tetap putih biar jelas */
+        padding:12px 0;
     }
 
-    .navbar.scrolled {
-        background: #ffffff !important;
-        box-shadow: 0 4px 12px rgba(0,0,0,.08);
+    .navbar-collapse{
+        background:#fff;
+        padding:16px;
+        border-radius:12px;
+        margin-top:10px;
+        box-shadow:0 10px 25px rgba(0,0,0,.08);
     }
 
-    /* DEFAULT (HALAMAN SELAIN HOME) */
-            .navbar-inner{
-                justify-content:space-between;
-            }
+    .navbar-nav{
+        gap:12px;
+    }
+}
 
-            /* KHUSUS HOME */
-            .home-page .navbar-inner{
-                justify-content:flex-start;
-            }
-
-            .home-page .navbar-nav{
-                margin-left:40px;
-            }
 
 
     /* ===============================
@@ -184,7 +216,7 @@
             height: 200px;
         }
         .card-utama img {
-            height: 300px;
+            height: 523px;
         }
         .read-more {
             color: #ff9800;
@@ -296,119 +328,75 @@
 </head>
 <body class="@yield('body-class')">
 
-{{-- NAVBAR --}}
-<nav class="navbar navbar-expand-lg">
+<nav class="navbar navbar-expand-lg fixed-top">
     <div class="container">
-        <div class="d-flex align-items-center">
-            <a class="navbar-brand fw-bold me-4" href="/">TASTY FOOD</a>
 
-            <ul class="navbar-nav flex-row gap-4">
+        {{-- BRAND --}}
+        <a class="navbar-brand fw-bold" href="/">TASTY FOOD</a>
+
+        {{-- TOGGLER --}}
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        {{-- MENU --}}
+        <div class="collapse navbar-collapse" id="navbarMenu">
+            <ul class="navbar-nav align-items-lg-center">
+
                 <li class="nav-item"><a class="nav-link" href="/">HOME</a></li>
                 <li class="nav-item"><a class="nav-link" href="/tentang">TENTANG</a></li>
                 <li class="nav-item"><a class="nav-link" href="/berita">BERITA</a></li>
                 <li class="nav-item"><a class="nav-link" href="/galeri">GALERI</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ route('kontak') }}">KONTAK</a></li>
+
+                @if(!Auth::check())
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">
+                            LOGIN
+                        </a>
+                    </li>
+                @else
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('logout') }}">
+                            LOGOUT
+                        </a>
+                    </li>
+                @endif
+
             </ul>
         </div>
+
     </div>
 </nav>
 
-{{-- HERO BACKGROUND (KHUSUS PAGE SELAIN HOME) --}}
-@if (View::hasSection('hero-bg'))
-<section class="hero-bg"
-    style="background-image: url('@yield('hero-bg')');">
+{{-- HERO PAGE --}}
+@if(View::hasSection('hero-bg'))
+<section class="hero-bg" style="background-image:url('@yield('hero-bg')')">
     <div class="container">
         <h1>@yield('hero-title')</h1>
     </div>
 </section>
 @endif
+
 {{-- CONTENT --}}
 @yield('content')
 
-{{-- footer --}}
+{{-- FOOTER --}}
 <footer class="footer-dark pt-5">
-    <div class="container">
-        <div class="row gy-4">
-
-            {{-- BRAND --}}
-            <div class="col-lg-4 col-md-6">
-                <h5 class="fw-bold text-white mb-3">Tasty Food</h5>
-                <p class="text-white small">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                </p>
-
-                <div class="d-flex gap-3 mt-3">
-                    <a href="#" class="social-icon facebook">
-                        <i class="bi bi-facebook"></i>
-                    </a>
-                    <a href="#" class="social-icon twitter">
-                        <i class="bi bi-twitter"></i>
-                    </a>
-                </div>
-            </div>
-
-            {{-- USEFUL LINKS --}}
-            <div class="col-lg-2 col-md-6">
-                <h6 class="text-white fw-semibold mb-3">Useful links</h6>
-                <ul class="list-unstyled footer-link">
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Hewan</a></li>
-                    <li><a href="#">Galeri</a></li>
-                    <li><a href="#">Testimonial</a></li>
-                </ul>
-            </div>
-
-            {{-- PRIVACY --}}
-            <div class="col-lg-2 col-md-6">
-                <h6 class="text-white fw-semibold mb-3">Privacy</h6>
-                <ul class="list-unstyled footer-link">
-                    <li><a href="#">Karir</a></li>
-                    <li><a href="#">Tentang Kami</a></li>
-                    <li><a href="#">Kontak Kami</a></li>
-                    <li><a href="#">Servis</a></li>
-                </ul>
-            </div>
-
-            {{-- CONTACT INFO --}}
-            <div class="col-lg-4 col-md-6">
-                <h6 class="text-white fw-semibold mb-3">Contact Info</h6>
-                <ul class="list-unstyled footer-contact">
-                    <li>
-                        <i class="bi bi-envelope"></i>
-                        tastyfood@gmail.com
-                    </li>
-                    <li>
-                        <i class="bi bi-telephone"></i>
-                        +62 812 3456 7890
-                    </li>
-                    <li>
-                        <i class="bi bi-geo-alt"></i>
-                        Kota Bandung, Jawa Barat
-                    </li>
-                </ul>
-            </div>
-
-        </div>
-
-        <hr class="border-secondary my-4">
-
-        <p class="text-center text-muted small mb-0">
-            Copyright ©2023 All rights reserved
+    <div class="container text-center pb-4">
+        <p class="text-muted small mb-0">
+            © 2023 Tasty Food — All Rights Reserved
         </p>
     </div>
 </footer>
 
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     const navbar = document.querySelector('.navbar');
-
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
+        window.scrollY > 50
+            ? navbar.classList.add('scrolled')
+            : navbar.classList.remove('scrolled');
     });
 </script>
 

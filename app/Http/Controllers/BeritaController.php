@@ -88,22 +88,22 @@ class BeritaController extends Controller
             ->with('success', 'Berita berhasil dihapus');
     }
 
-    public function show($id)
-    {
-        try {
-            $id = decrypt($id);
-        } catch (DecryptException $e) {
-            return redirect()
-                ->route('berita')
-                ->with('error', 'ID tidak valid');
-        }
+    // public function show($id)
+    // {
+    //     try {
+    //         $id = decrypt($id);
+    //     } catch (DecryptException $e) {
+    //         return redirect()
+    //             ->route('berita')
+    //             ->with('error', 'ID tidak valid');
+    //     }
 
-        $berita = Berita::findOrFail($id);
+    //     $berita = Berita::findOrFail($id);
 
-        $komentar = Ulasan::where('berita_id', $berita->id)
-            ->latest()
-            ->get();
+    //     $komentar = Ulasan::where('berita_id', $berita->id)
+    //         ->latest()
+    //         ->get();
 
-        return view('user.detail-berita', compact('berita', 'komentar'));
-    }
+    //     return view('user.detail-berita', compact('berita', 'komentar'));
+    // }
 }

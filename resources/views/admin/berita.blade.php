@@ -86,7 +86,7 @@
                         <span class="deskripsi-truncate"
                               data-bs-toggle="tooltip"
                               title="{{ $b->isi }}">
-                            {{ $b->isi }}
+                            {{ Str::limit($b->isi, 50) }}
                         </span>
                     </td>
 

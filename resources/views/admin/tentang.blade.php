@@ -68,13 +68,15 @@
 
                     <td>
                         <span class="text-limit" title="{{ $item->visi }}">
-                            {{ $item->visi }}
+                            {{-- {{ $item->visi }} --}}
+                            {{ Str::limit($item->visi, 10) }}
                         </span>
                     </td>
 
                     <td>
                         <span class="text-limit" title="{{ $item->misi }}">
-                            {{ $item->misi }}
+                            {{-- {{ $item->misi }} --}}
+                            {{ Str::limit($item->misi, 10) }}
                         </span>
                     </td>
 
@@ -174,6 +176,14 @@
                         <label>No Telp</label>
                         <input type="text" name="no_telp" class="form-control">
                     </div>
+                    <div class="col-md-6">
+                        <label>Alamat</label>
+                        <input type="text" name="alamat" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        <label>Deskripsi</label>
+                        <input type="text" name="deskripsi" class="form-control">
+                    </div>
                     <div class="col-12">
                         <label>Visi</label>
                         <textarea name="visi" class="form-control"></textarea>
@@ -258,7 +268,7 @@
                     <input type="file" name="nama_file" class="form-control mb-2" required>
 
                     <select name="tipe" class="form-control" required>
-                        <option value="perusahaan">Perusahaan</option>
+                        <option value="perushaan">Perusahaan</option>
                         <option value="visi">Visi</option>
                         <option value="misi">Misi</option>
                     </select>
