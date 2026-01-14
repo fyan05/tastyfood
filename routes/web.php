@@ -67,6 +67,13 @@ Route::get('/detailberita/{id}',[UserController::class, 'detailberita'])->name('
 Route::get('/galeri',[UserController::class, 'galeri'])->name('galeri');
 Route::middleware('user')->group(function () {
     Route::get('/logout',[LoginController::class, 'logout'])->name('logout');
+    route::get('/dashboard',[UserController::class, 'dashboard'])->name('user.dashboard');
+    Route::get('/profile',[UserController::class, 'profile'])->name('user.profile');
+    Route::post('/profile/update/{id}',[UserController::class, 'updateprofile'])->name('user.profile.update');
+    Route::get('/postingan',[UserController::class, 'postingan'])->name('user.postingan');
+    Route::post('/postingan/store',[UserController::class, 'storepostingan'])->name('user.postingan.store');
+    Route::put('/postingan/update/{id}',[UserController::class, 'updatepostingan'])->name('user.postingan.update');
+    Route::delete('/postingan/destroy/{id}',[UserController::class, 'deletepostingan'])->name('user.postingan.destroy');
     Route::post('/komentar/store',[KomentarController::class, 'store'])->name('berita.komentar');
 });
 

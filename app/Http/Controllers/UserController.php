@@ -57,7 +57,12 @@ class UserController extends Controller
         $data['lainnya'] = $foto->slice(3)->take(12);
         return view('user.galeri', $data);
     }
-
+    public function dashboard(){
+        return view('user-post.dashboard');
+    }
+    public function profile(){
+        return view('user-post.setting-profile');
+    }
 
 
 }
