@@ -31,7 +31,7 @@
             <i class="fa fa-utensils text-success"></i> Tasty Food
         </h3>
 
-        <p class="text-center text-muted">Login ke Dashboard Admin</p>
+        <p class="text-center text-muted">Makanan Sehat Dan Terjangkau</p>
          @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>

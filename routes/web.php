@@ -5,8 +5,10 @@ use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\GaleryController;
 use App\Http\Controllers\GambarTentangController;
 use App\Http\Controllers\KomentarController;
+use App\Http\Controllers\KontactController;
 use App\Http\Controllers\KontakController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\TentangController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -33,10 +35,15 @@ Route::delete('admin/gambardestroy/{id}',[GambarTentangController::class,'delete
 
 //Kontak
 Route::get('admin/kontak', [KontakController::class, 'kontak'])->name('admin.kontak');
-Route::post('admin/kontakstore',[KontakController::class,'store'])->name('kontakstore');
-Route::put('admin/kontakupdate/{id}',[KontakController::class,'update'])->name('kontakupdate');
-Route::delete('admin/kontakdestroy/{id}',[KontakController::class,'delete'])->name('kontakdestroy');
+Route::put('admin/kontakupdate/{id}',[KontakController::class,'update'])->name('admin.kontact.update');
+Route::delete('admin/kontakdestroy/{id}',[KontakController::class,'delete'])->name('admin.kontact.destroy');
 Route::put('admin/markasread/{id}', [KontakController::class, 'markAsRead'])->name('admin.kontak.read');
+
+//Kontact Address
+Route::post('admin/kontak/store',[KontactController::class,'add'])->name('kontak.store');
+Route::put('admin/kontak/update/{id}',[KontactController::class,'edit'])->name('kontak.update');
+Route::delete('admin/kontak/delete/{id}',[KontactController::class,'delete'])->name('kontak.delete');
+Route::get('admin/kontak/address',[KontactController::class,'index'])->name('admin.kontak.index');
 
 //Berita
 Route::get('admin/berita', [BeritaController::class, 'berita'])->name('admin.berita');
@@ -65,15 +72,16 @@ Route::get('/tentang',[UserController::class, 'tentang'])->name('tentang');
 Route::get('/berita',[UserController::class, 'berita'])->name('berita');
 Route::get('/detailberita/{id}',[UserController::class, 'detailberita'])->name('berita.detail');
 Route::get('/galeri',[UserController::class, 'galeri'])->name('galeri');
+Route::post('admin/kontakstore',[KontakController::class,'store'])->name('kontakstore');
 Route::middleware('user')->group(function () {
     Route::get('/logout',[LoginController::class, 'logout'])->name('logout');
-    route::get('/dashboard',[UserController::class, 'dashboard'])->name('user.dashboard');
-    Route::get('/profile',[UserController::class, 'profile'])->name('user.profile');
-    Route::post('/profile/update/{id}',[UserController::class, 'updateprofile'])->name('user.profile.update');
-    Route::get('/postingan',[UserController::class, 'postingan'])->name('user.postingan');
-    Route::post('/postingan/store',[UserController::class, 'storepostingan'])->name('user.postingan.store');
-    Route::put('/postingan/update/{id}',[UserController::class, 'updatepostingan'])->name('user.postingan.update');
-    Route::delete('/postingan/destroy/{id}',[UserController::class, 'deletepostingan'])->name('user.postingan.destroy');
+    Route::get('/dashboard',[PostController::class, 'dashboard'])->name('user.dashboard');
+    Route::get('/profile',[PostController::class, 'profile'])->name('user.profile');
+    Route::post('/profile/update/{id}',[PostController::class, 'updateprofile'])->name('user.profile.update');
+    Route::get('/postingan',[PostController::class, 'postingan'])->name('user.postingan');
+    Route::post('/postingan/store',[PostController::class, 'storepostingan'])->name('user.postingan.store');
+    Route::put('/postingan/update/{id}',[PostController::class, 'updatepostingan'])->name('user.postingan.update');
+    Route::delete('/postingan/destroy/{id}',[PostController::class, 'deletepostingan'])->name('user.postingan.destroy');
     Route::post('/komentar/store',[KomentarController::class, 'store'])->name('berita.komentar');
 });
 

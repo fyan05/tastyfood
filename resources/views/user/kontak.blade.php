@@ -116,12 +116,13 @@
 =============================== --}}
 <div class="container text-center py-4">
     <div class="row g-4">
+
         <div class="col-md-4">
             <div class="contact-icon">
                 <i class="fa-solid fa-envelope"></i>
             </div>
             <p class="fw-semibold mb-1">EMAIL</p>
-            <small>tastyfood@gmail.com</small>
+            <small>{{ $kontact->email ?? '-' }}</small>
         </div>
 
         <div class="col-md-4">
@@ -129,7 +130,7 @@
                 <i class="fa-solid fa-phone"></i>
             </div>
             <p class="fw-semibold mb-1">PHONE</p>
-            <small>+62 812 3456 7890</small>
+            <small>{{ $kontact->phone ?? '-' }}</small>
         </div>
 
         <div class="col-md-4">
@@ -137,20 +138,21 @@
                 <i class="fa-solid fa-location-dot"></i>
             </div>
             <p class="fw-semibold mb-1">LOCATION</p>
-            <small>Kota Bandung, Jawa Barat</small>
+            <small>{{ $kontact->address ?? '-' }}</small>
         </div>
+
     </div>
 </div>
-
 {{-- ===============================
     MAP
 =============================== --}}
 <div class="container pb-5">
     <iframe
         class="map-frame"
-        src="https://www.google.com/maps?q=bandung&output=embed"
+        src="https://www.google.com/maps?q={{ urlencode($kontact->address ?? 'bandung') }}&output=embed"
         loading="lazy">
     </iframe>
 </div>
+
 
 @endsection

@@ -216,11 +216,17 @@
                 @if (!Auth::check())
                 <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">LOGIN</a></li>
                 @else
+                 <li class="nav-item">
+                    <a class="nav-link btn btn-warning text-dark fw-600 px-3 py-2 rounded-pill ms-2"
+                    href="{{ route('user.dashboard') }}">
+                        <i class="fa-solid fa-plus me-2"></i>TAMBAH POSTINGAN
+                    </a>
+                </li>
                 <li class="nav-item"><a class="nav-link" href="{{ route('logout') }}">LOGOUT</a></li>
                 @endif
             </ul>
-        </div>
 
+        </div>
     </div>
 </nav>
 
@@ -249,9 +255,11 @@
 
             {{-- BRAND --}}
             <div class="col-lg-4 col-md-6">
-                <h5 class="fw-bold text-white mb-3">Tasty Food</h5>
+                <h5 class="fw-bold text-white mb-3">
+                    {{ App\Models\tentang::getname() }}
+                </h5>
                 <p class="text-white small">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                    {{ App\Models\tentang::getdeskripsi() }}
                 </p>
 
                 <div class="d-flex gap-3 mt-3">
@@ -292,15 +300,15 @@
                 <ul class="list-unstyled footer-contact">
                     <li>
                         <i class="bi bi-envelope"></i>
-                        tastyfood@gmail.com
+                        {{ App\Models\tentang::getgmail() ?? '-' }}
                     </li>
                     <li>
                         <i class="bi bi-telephone"></i>
-                        +62 812 3456 7890
+                        {{ App\Models\tentang::getno() ?? '-' }}
                     </li>
                     <li>
                         <i class="bi bi-geo-alt"></i>
-                        Kota Bandung, Jawa Barat
+                        {{ App\Models\tentang::getalamat() ?? '-' }}
                     </li>
                 </ul>
             </div>
@@ -310,11 +318,10 @@
         <hr class="border-secondary my-4">
 
         <p class="text-center text-muted small mb-0">
-            Copyright ©2023 All rights reserved
+            © {{ date('Y') }} {{ $profil->nama ?? 'Website' }}. All rights reserved
         </p>
     </div>
 </footer>
-
 {{-- jsnavbar --}}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 

@@ -15,109 +15,153 @@
 
     {{-- BODY --}}
     <div class="card-body table-responsive">
-        <table id="kontakTable"
-               class="table table-hover align-middle text-center nowrap"
-               style="width:100%">
-
-            {{-- TABLE HEAD --}}
+        <table class="table table-hover align-middle text-center">
             <thead class="table-light">
                 <tr>
-                    <th style="width:50px">#</th>
+                    <th>#</th>
                     <th>Nama</th>
                     <th>Email</th>
                     <th>Subject</th>
                     <th>Pesan</th>
-                    <th style="width:130px">Status</th>
-                    <th style="width:140px">Dikirim</th>
-                    <th style="width:90px">Aksi</th>
+                    <th>Status</th>
+                    <th>Dikirim</th>
+                    <th>Aksi</th>
                 </tr>
             </thead>
 
-            {{-- TABLE BODY --}}
             <tbody>
                 @foreach ($data as $k)
-                    <tr class="{{ $k->status == 'belum terbaca' ? 'table-warning' : '' }}">
+                <tr class="{{ $k->status == 'belum terbaca' ? 'table-warning' : '' }}">
+                    <td class="fw-bold">{{ $loop->iteration }}</td>
 
-                        <td class="fw-bold">
-                            {{ $loop->iteration }}
-                        </td>
+                    <td>{{ $k->nama }}</td>
 
-                        <td>{{ $k->nama }}</td>
+                    <td>
+                        <a href="mailto:{{ $k->email }}">
+                            {{ $k->email }}
+                        </a>
+                    </td>
 
-                        <td>
-                            <a href="mailto:{{ $k->email }}"
-                               class="text-decoration-none">
-                                {{ $k->email }}
-                            </a>
-                        </td>
+                    <td class="fw-semibold">{{ $k->subject }}</td>
 
-                        <td class="fw-semibold">
-                            {{ $k->subject }}
-                        </td>
+                    <td>
+                        {{ Str::limit($k->pesan, 40) }}
+                    </td>
 
-                        <td>
-                            <span data-bs-toggle="tooltip"
-                                  title="{{ $k->pesan }}">
-                                {{ Str::limit($k->pesan, 50) }}
+                    <td>
+                        @if ($k->status == 'belum terbaca')
+                            <span class="badge bg-warning text-dark">
+                                Belum Terbaca
                             </span>
-                        </td>
+                        @else
+                            <span class="badge bg-success">
+                                Terbaca
+                            </span>
+                        @endif
+                    </td>
 
-                        <td>
-                            @if ($k->status == 'belum terbaca')
-                                <span class="badge rounded-pill bg-warning text-dark px-3 py-2">
-                                    <i class="fa-solid fa-envelope me-1"></i> Belum
-                                </span>
-                            @else
-                                <span class="badge rounded-pill bg-success px-3 py-2">
-                                    <i class="fa-solid fa-check me-1"></i> Terbaca
-                                </span>
-                            @endif
-                        </td>
+                    <td>
+                        <div class="d-flex flex-column">
+                            <span>{{ $k->created_at->format('d M Y') }}</span>
+                            <small class="text-muted">{{ $k->created_at->format('H:i') }}</small>
+                        </div>
+                    </td>
 
-                        <td>
-                            <div class="d-flex flex-column align-items-center">
-                                <span>{{ $k->created_at->format('d M Y') }}</span>
-                                <small class="text-muted">
-                                    {{ $k->created_at->format('H:i') }}
-                                </small>
+                    {{-- AKSI --}}
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#detailModal{{ $k->id }}">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                    </td>
+                </tr>
+
+                {{-- ================= MODAL DETAIL PESAN ================= --}}
+                <div class="modal fade" id="detailModal{{ $k->id }}" tabindex="-1">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content">
+
+                            <div class="modal-header bg-primary text-white">
+                                <h5 class="modal-title">
+                                    <i class="fa-solid fa-envelope-open-text me-2"></i>
+                                    Detail Pesan
+                                </h5>
+                                <button type="button" class="btn-close btn-close-white"
+                                        data-bs-dismiss="modal"></button>
                             </div>
-                        </td>
 
-                        <td>
-                            <div class="d-flex justify-content-center">
+                            <div class="modal-body text-start">
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <strong>Nama</strong>
+                                        <p>{{ $k->nama }}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <strong>Email</strong>
+                                        <p>
+                                            <a href="mailto:{{ $k->email }}">
+                                                {{ $k->email }}
+                                            </a>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <strong>Subject</strong>
+                                    <p>{{ $k->subject }}</p>
+                                </div>
+
+                                <div class="mb-3">
+                                    <strong>Pesan Lengkap</strong>
+                                    <div class="border rounded p-3 bg-light">
+                                        {{ $k->pesan }}
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <strong>Status</strong><br>
+                                    @if ($k->status == 'belum terbaca')
+                                        <span class="badge bg-warning text-dark">
+                                            Belum Terbaca
+                                        </span>
+                                    @else
+                                        <span class="badge bg-success">
+                                            Terbaca
+                                        </span>
+                                    @endif
+                                </div>
+
+                                <div>
+                                    <strong>Dikirim</strong><br>
+                                    {{ $k->created_at->format('d M Y H:i') }}
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
                                 @if ($k->status == 'belum terbaca')
-                                    <form action="{{ route('admin.kontak.read', $k->id) }}"
-                                          method="POST">
-                                        @csrf
-                                        @method('PUT')
-                                        <button class="btn btn-sm btn-outline-primary"
-                                                data-bs-toggle="tooltip"
-                                                title="Tandai Terbaca">
-                                            <i class="fa-solid fa-eye"></i>
-                                        </button>
-                                    </form>
+                                <form action="{{ route('admin.kontak.read', $k->id) }}"
+                                      method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <button class="btn btn-secondary"
+                                        data-bs-dismiss="modal">
+                                    Tutup
+                                </button>
+                                </form>
                                 @endif
-                            </div>
-                        </td>
 
-                    </tr>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                {{-- ================= END MODAL ================= --}}
                 @endforeach
             </tbody>
-
         </table>
     </div>
 </div>
-
-{{-- TOOLTIP --}}
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const tooltipTriggerList = [].slice.call(
-        document.querySelectorAll('[data-bs-toggle="tooltip"]')
-    )
-    tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl)
-    })
-})
-</script>
 
 @endsection

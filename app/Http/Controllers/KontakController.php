@@ -16,7 +16,7 @@ class KontakController extends Controller
     }
 
     public function markAsRead($id){
-        $kontak = ulasan::findOrFail($id);
+        $kontak = kontak::findOrFail($id);
         $kontak->status = 'terbaca';
         $kontak->save();
         return redirect()->route('admin.kontak')->with('success','Pesan telah ditandai sebagai terbaca');
@@ -24,7 +24,7 @@ class KontakController extends Controller
     public function store ( Request $request){
 
         $request->validate([
-            'Name'=>'required|string',
+            'Name'=>'required|string',  
             'Email'=>'required|email',
             'Subject'=>'required|string',
             'Message'=>'required|string',
@@ -38,6 +38,6 @@ class KontakController extends Controller
             'status'=>'belum terbaca',
         ]);
 
-        return redirect()->route('kontak')->with('success','Pesan Anda telah terkirim');
+        return back()->with('success','Pesan Anda telah terkirim');
     }
 }

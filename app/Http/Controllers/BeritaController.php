@@ -56,15 +56,20 @@ class BeritaController extends Controller
             'nama_penulis' => 'required|string',
             'tanggal' => 'required|date',
             'kategori' => 'required|in:Makanan,Minuman',
-            'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:204800',
         ]);
 
-        if ($request->hasFile('foto')) {
-            $berita->foto = $request->file('foto')
+       if ($request->hasFile('foto')) {
+            $foto = $request->file('foto')
                 ->store('berita', 'public');
         }
-
-        $berita->update($validated);
+        $berita->foto = $foto ?? $berita->foto;
+        $berita->judul = $request->judul;
+        $berita->isi = $request->isi;
+        $berita->nama_penulis = $request->nama_penulis;
+        $berita->tanggal = $request->tanggal;
+        $berita->kategori = $request->kategori;
+        $berita->save();
 
         return redirect()
             ->route('admin.berita')

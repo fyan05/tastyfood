@@ -216,7 +216,7 @@ NAVBAR
             height: 200px;
         }
         .card-utama img {
-            height: 523px;
+            height: 562px;
         }
         .read-more {
             color: #ff9800;
@@ -356,6 +356,12 @@ NAVBAR
                         </a>
                     </li>
                 @else
+                <li class="nav-item">
+                    <a class="nav-link btn btn-warning text-dark fw-600 px-3 py-2 rounded-pill ms-2"
+                    href="{{ route('user.dashboard') }}">
+                        <i class="fa-solid fa-plus me-2"></i>TAMBAH POSTINGAN
+                    </a>
+                </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('logout') }}">
                             LOGOUT
@@ -383,9 +389,75 @@ NAVBAR
 
 {{-- FOOTER --}}
 <footer class="footer-dark pt-5">
-    <div class="container text-center pb-4">
-        <p class="text-muted small mb-0">
-            © 2023 Tasty Food — All Rights Reserved
+    <div class="container">
+        <div class="row gy-4">
+
+            {{-- BRAND --}}
+            <div class="col-lg-4 col-md-6">
+                <h5 class="fw-bold text-white mb-3">
+                    {{ App\Models\tentang::getname() }}
+                </h5>
+                <p class="text-white small">
+                    {{ App\Models\tentang::getdeskripsi() }}
+                </p>
+
+                <div class="d-flex gap-3 mt-3">
+                    <a href="#" class="social-icon facebook">
+                        <i class="bi bi-facebook"></i>
+                    </a>
+                    <a href="#" class="social-icon twitter">
+                        <i class="bi bi-twitter"></i>
+                    </a>
+                </div>
+            </div>
+
+            {{-- USEFUL LINKS --}}
+            <div class="col-lg-2 col-md-6">
+                <h6 class="text-white fw-semibold mb-3">Useful links</h6>
+                <ul class="list-unstyled footer-link">
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Hewan</a></li>
+                    <li><a href="#">Galeri</a></li>
+                    <li><a href="#">Testimonial</a></li>
+                </ul>
+            </div>
+
+            {{-- PRIVACY --}}
+            <div class="col-lg-2 col-md-6">
+                <h6 class="text-white fw-semibold mb-3">Privacy</h6>
+                <ul class="list-unstyled footer-link">
+                    <li><a href="#">Karir</a></li>
+                    <li><a href="#">Tentang Kami</a></li>
+                    <li><a href="#">Kontak Kami</a></li>
+                    <li><a href="#">Servis</a></li>
+                </ul>
+            </div>
+
+            {{-- CONTACT INFO --}}
+            <div class="col-lg-4 col-md-6">
+                <h6 class="text-white fw-semibold mb-3">Contact Info</h6>
+                <ul class="list-unstyled footer-contact">
+                    <li>
+                        <i class="bi bi-envelope"></i>
+                        {{ App\Models\tentang::getgmail() ?? '-' }}
+                    </li>
+                    <li>
+                        <i class="bi bi-telephone"></i>
+                        {{ App\Models\tentang::getno() ?? '-' }}
+                    </li>
+                    <li>
+                        <i class="bi bi-geo-alt"></i>
+                        {{ App\Models\tentang::getalamat() ?? '-' }}
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <hr class="border-secondary my-4">
+
+        <p class="text-center text-muted small mb-0">
+            © {{ date('Y') }} {{ $profil->nama ?? 'Website' }}. All rights reserved
         </p>
     </div>
 </footer>

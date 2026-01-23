@@ -59,7 +59,7 @@
 
         {{-- IMAGE --}}
         <div class="col-lg-6">
-            <img src="{{ asset('storage/'. $berita->foto) }}"
+            <img src="{{ asset('storage/berita/'. $berita->foto) }}"
                  class="img-fluid rounded-4 shadow-sm"
                  alt="{{ $berita->judul }}">
         </div>
@@ -97,7 +97,7 @@
 
             <div class="card border-0 shadow-sm h-100 news-card">
 
-                <img src="{{ asset('storage/'. $item->foto) }}"
+                <img src="{{ asset('storage/berita/'. $item->foto) }}"
                      class="card-img-top rounded-top-4"
                      alt="{{ $item->judul }}">
 

@@ -168,9 +168,15 @@
             </a>
         </li>
 
-        <li class="{{ request()->is('admin/kontak*') ? 'active' : '' }}">
+        <li class="{{ request()->is('admin/kontak') || request()->is('admin/kontak/') ? 'active' : '' }}">
             <a href="/admin/kontak">
                 <i class="fa-solid fa-envelope"></i> Kontak
+            </a>
+        </li>
+
+        <li class="{{ request()->is('admin/kontak/address*') ? 'active' : '' }}">
+            <a href="/admin/kontak/address">
+                <i class="fa-solid fa-map"></i> Address
             </a>
         </li>
 
@@ -185,13 +191,13 @@
 {{-- MAIN --}}
 <div class="main-wrapper">
 
-    {{-- TOPBAR --}}
+    {{-- TOPBAR
     <div class="topbar">
         <button class="btn btn-link d-lg-none" id="sidebarToggle">
             <i class="fa-solid fa-bars fs-4"></i>
         </button>
         <strong>@yield('title','Dashboard')</strong>
-    </div>
+    </div> --}}
 
     {{-- CONTENT --}}
     <div class="content">

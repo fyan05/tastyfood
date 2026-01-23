@@ -6,6 +6,7 @@ use App\Models\berita;
 use App\Models\galery;
 use App\Models\gambar_tentang;
 use App\Models\Komentar;
+use App\Models\Kontact;
 use App\Models\tentang;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
@@ -24,7 +25,8 @@ class UserController extends Controller
         return view('user.home',$data);
     }
     public function kontak(){
-        return view('user.kontak');
+         $data['kontact'] = Kontact::first();
+        return view('user.kontak', $data);
     }
     public function tentang(){
         $data['tentang'] = tentang::first();
